@@ -1,14 +1,15 @@
-import Navigation from './Navigation';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import LoadingBar from 'react-redux-loading';
 import { handleInitialData } from '../Actions/Global';
 import Home from './Home';
+import Navigation from './Navigation';
 import ProtectedRoute from './ProtectedRoute';
 import AddQuestion from './AddQuestion';
-
-import './../App.css'
 import { NotFound } from './NotFound';
+import QuestionCardPoll from './QuestionCardPoll';
+import './../App.css';
 
 class App extends Component {
     componentDidMount() {
@@ -17,28 +18,29 @@ class App extends Component {
 
     render() {
         return (
-          <div className="container grid-md">
-              <Router>
-                  <Navigation/>
-                  <Switch>
-                      <Route exact path="/" component={Home}/>
-                      <ProtectedRoute path="/add-question" component={AddQuestion}/>
-                      <Route component={NotFound} />
-                  </Switch>
+          <Router>
+              <LoadingBar/>
+              <div className="container grid-md">
+                  {this.props.isLoading
+                    ?
+                    <span>Please wait, loading data</span>
+                    :
+                    <Fragment>
+                        <Navigation/>
+                        <Switch>
+                            <Route exact path="/" component={Home}/>
+                            <ProtectedRoute path="/add-question" component={AddQuestion}/>
+                            <ProtectedRoute path="/questions/:question_id" component={QuestionCardPoll}/>
+                            <Route component={NotFound}/>
+                        </Switch>
+                    </Fragment>
+                  }
+              </div>
+          </Router>
 
-
-              </Router>
-          </div>
         );
     }
-
 }
 
-function mapStateToProps({ authenticateUser }) {
-    return {
-        authenticateUser,
-    };
-}
-
-export default connect(mapStateToProps, { handleInitialData })(App);
+export default connect(({ isLoading }) => {return { isLoading };}, { handleInitialData })(App);
 

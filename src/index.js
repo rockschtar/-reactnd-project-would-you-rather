@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import indexReducer from './Reducers/index';
 import indexMiddleware from './Middleware/index'
 
+
 const store = createStore(indexReducer, indexMiddleware);
 
 ReactDOM.render(

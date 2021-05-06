@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Login from './Login';
+import QuestionsTabs from './QuestionsTabs';
 
 class Home extends Component {
 
     render() {
         const { authenticateUser} = this.props;
 
-        console.log("Render", 'Home')
-
         if(!authenticateUser) {
             return <Login />
         }
 
         return (
-          <div className="form-group">
-            Home {authenticateUser}
-          </div>
+
+            <QuestionsTabs />
+
         );
     }
 }
