@@ -1,1 +1,6 @@
 @import "~spectre.css";
+
+
+.darth404 {
+    content: url('Assets/svg/Darth404.svg');
+}

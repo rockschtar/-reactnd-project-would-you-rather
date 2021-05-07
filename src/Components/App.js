@@ -7,9 +7,9 @@ import Home from './Home';
 import Navigation from './Navigation';
 import ProtectedRoute from './ProtectedRoute';
 import AddQuestion from './AddQuestion';
-import { NotFound } from './NotFound';
 import QuestionCardPoll from './QuestionCardPoll';
 import './../App.css';
+import NotFound from './NotFound';
 
 class App extends Component {
     componentDidMount() {
@@ -29,10 +29,11 @@ class App extends Component {
                         <Navigation/>
                         <Switch>
                             <Route exact path="/" component={Home}/>
-                            <ProtectedRoute path="/add-question" component={AddQuestion}/>
+                            <ProtectedRoute path="/add" component={AddQuestion}/>
                             <ProtectedRoute path="/questions/:question_id" component={QuestionCardPoll}/>
                             <Route component={NotFound}/>
                         </Switch>
+
                     </Fragment>
                   }
               </div>
