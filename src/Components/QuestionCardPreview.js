@@ -11,10 +11,10 @@ class QuestionCardPreview extends Component {
     };
 
     render() {
-        const { question, authenticateUser } = this.props;
+        const { question, authedUser } = this.props;
 
-        const isAnswered = question.optionOne.votes.includes(authenticateUser) ||
-          question.optionTwo.votes.includes(authenticateUser);
+        const isAnswered = question.optionOne.votes.includes(authedUser) ||
+          question.optionTwo.votes.includes(authedUser);
 
 
         return (
@@ -37,9 +37,9 @@ class QuestionCardPreview extends Component {
 
 }
 
-function mapStateToProps({ authenticateUser }) {
+function mapStateToProps({ authedUser }) {
     return {
-        authenticateUser: authenticateUser,
+        authedUser,
     };
 }
 

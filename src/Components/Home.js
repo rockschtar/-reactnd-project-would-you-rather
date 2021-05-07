@@ -6,9 +6,9 @@ import QuestionsTabs from './QuestionsTabs';
 class Home extends Component {
 
     render() {
-        const { authenticateUser} = this.props;
+        const { authedUser} = this.props;
 
-        if(!authenticateUser) {
+        if(!authedUser) {
             return <Login />
         }
 
@@ -20,9 +20,9 @@ class Home extends Component {
     }
 }
 
-function mapStateToProps({ authenticateUser }) {
+function mapStateToProps({ authedUser }) {
     return {
-        authenticateUser : authenticateUser
+        authedUser : authedUser
     };
 }
 

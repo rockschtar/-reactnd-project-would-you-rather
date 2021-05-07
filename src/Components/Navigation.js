@@ -4,14 +4,13 @@ import { withRouter } from 'react-router-dom'
 import Logout from './Logout';
 import { Link } from 'react-router-dom';
 
-
 class Navigation extends Component {
 
     render() {
 
-        const { authenticateUser} = this.props;
+        const { user } = this.props;
 
-        if(!authenticateUser) {
+        if(!user) {
             return <Fragment />
         }
 
@@ -19,7 +18,7 @@ class Navigation extends Component {
           <header className="navbar">
               <section className="navbar-section">
                   <section className="navbar-section">
-                      {authenticateUser && `Hi ${authenticateUser}`}
+                      {`Hi, ${user.name}`}
                   </section>
               </section>
               <section className="navbar-center">
@@ -28,7 +27,7 @@ class Navigation extends Component {
                   <Link to={`/leaderboard`}className='btn btn-link'>Leader Board</Link>
               </section>
               <section className="navbar-section">
-                  {authenticateUser && <Logout />}
+                  {<Logout />}
               </section>
           </header>
 
@@ -37,9 +36,9 @@ class Navigation extends Component {
 
 }
 
-function mapStateToProps({ authenticateUser }) {
+function mapStateToProps({ authedUser, users }) {
     return {
-        authenticateUser : authenticateUser
+        user : Object.values(users).find((user) => user.id === authedUser)
     };
 }
 

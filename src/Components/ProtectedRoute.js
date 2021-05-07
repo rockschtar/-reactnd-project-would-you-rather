@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => {
       return (
-        rest.authenticateUser
+        rest.authedUser
           ? <Component {...props} />
           : <Redirect to={{ pathname: '/', state: { from: props.location } }}/>
       );
   }}/>
 );
 
-function mapStateToProps({ authenticateUser }) {
+function mapStateToProps({ authedUser }) {
     return {
-        authenticateUser,
+        authedUser,
     };
 }
 

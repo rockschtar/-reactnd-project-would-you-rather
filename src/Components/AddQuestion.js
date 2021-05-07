@@ -41,9 +41,9 @@ class AddQuestion extends Component {
         this.setState({ loading: true });
 
         const { optionOne, optionTwo } = this.state;
-        const { handleAddQuestion, authenticateUser, history } = this.props;
+        const { handleAddQuestion, authedUser, history } = this.props;
 
-        handleAddQuestion(optionOne, optionTwo, authenticateUser)
+        handleAddQuestion(optionOne, optionTwo, authedUser)
           .then(() => {
               this.setState({ loading: false }, () => { history.push('/'); });
           });
@@ -105,9 +105,9 @@ class AddQuestion extends Component {
 }
 
 export default withRouter(connect(
-  ({ authenticateUser }) => {
+  ({ authedUser }) => {
       return {
-          authenticateUser: authenticateUser,
+          authedUser: authedUser,
       };
   },
   { handleAddQuestion })(AddQuestion));

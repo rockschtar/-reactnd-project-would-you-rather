@@ -3,54 +3,93 @@ import PropTypes from 'prop-types';
 import QuestionCardHeader from './QuestionCardHeader';
 import { connect } from 'react-redux';
 import { isAnswered } from '../Utils/Helpers';
+import { handleAnswerQuestion } from '../Actions/Questions';
 
 class QuestionCardPoll extends Component {
+
+    state = {
+        answer : null,
+        loading: false
+    }
 
     static propTypes = {
         question_id: PropTypes.string,
         question: PropTypes.object.isRequired,
     };
 
+    handleAnswerChange = (e) => {
+        this.setState({ answer: e.target.value});
+    }
+
+    handleAnswerQuestion = () => {
+
+        this.setState({loading : true})
+
+        const { question, authedUser } = this.props;
+        const { answer } = this.state;
+
+        this.props.handleAnswerQuestion(authedUser, question.id, answer).then(() => {
+            this.setState({loading: false});
+        })
+
+    }
+
     handleGoBack = () => {
-
         this.props.history.goBack();
-
     };
 
     render() {
-        const { question, authenticateUser } = this.props;
+
+        const { loading } = this.state;
+        const { question, authedUser } = this.props;
+
+        const round = (number) => {
+            return Math.round(number * 100) / 100;
+        }
 
         const countVotesOptionOne = question.optionOne.votes.length;
         const countVotesOptionTwo = question.optionTwo.votes.length;
         const countVotesTotal = countVotesOptionOne + countVotesOptionTwo;
-        const precentVotesOptionOne = (countVotesOptionOne * 100) / countVotesTotal;
-        const precentVotesOptionTwo = (countVotesOptionTwo * 100) / countVotesTotal;
-        const userVotedForOptionOne = question.optionOne.votes.includes(authenticateUser);
-        const userVotedForOptionTwo = question.optionTwo.votes.includes(authenticateUser);
+        const precentVotesOptionOne = round((countVotesOptionOne * 100) / countVotesTotal);
+        const precentVotesOptionTwo = round((countVotesOptionTwo * 100) / countVotesTotal);
+        const userVotedForOptionOne = question.optionOne.votes.includes(authedUser);
+        const userVotedForOptionTwo = question.optionTwo.votes.includes(authedUser);
 
         return (
 
           <div className="card text-center">
               <QuestionCardHeader question={question}/>
 
-              {!isAnswered(question, authenticateUser)
+              {!isAnswered(question, authedUser)
                 ?
                 <Fragment>
                     <div className="card-body">
                         <div className="form-group d-inline-block text-left">
                             <label className="form-radio">
-                                <input type="radio" name="gender"/>
+                                <input
+                                  type="radio"
+                                  name="answer"
+                                  value="optionOne"
+                                  disabled={loading}
+                                  onChange={this.handleAnswerChange}
+
+                                />
                                 <i className="form-icon"/> {question.optionOne.text}
                             </label>
                             <label className="form-radio">
-                                <input type="radio" name="gender"/>
+                                <input
+                                  type="radio"
+                                  name="answer"
+                                  disabled={loading}
+                                  value="optionTwo"
+                                       onChange={this.handleAnswerChange}/>
                                 <i className="form-icon"/> {question.optionTwo.text}
                             </label>
                         </div>
 
                     </div>
                     <div className="card-footer">
-                        <button className="btn btn-primary">Answer Question</button>
+                        <button  disabled={loading} onClick={this.handleAnswerQuestion} className="btn btn-primary">Answer Question</button>
                     </div>
                 </Fragment>
                 :
@@ -102,25 +141,18 @@ class QuestionCardPoll extends Component {
 
 }
 
-function mapStateToProps({
-      users
-      ,
-      questions
-      ,
-      authenticateUser
-      ,
-  }
-  , props) {
+
+export default connect(({ users, questions, authedUser }, props) => {
     let question_id = props.match?.params.question_id ?? props.question_id;
 
     return {
-        authenticateUser,
+        authedUser,
         question: Object.values(questions).find((question) => question.id === question_id),
         users: Object.values(users),
     };
-}
 
-export default connect(mapStateToProps)(QuestionCardPoll);
+    }, { handleAnswerQuestion })(QuestionCardPoll);
+
 
 
 

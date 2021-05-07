@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setAuthenticatedUser } from '../Actions/AuthenticatedUser';
+import { setAuthedUser } from '../Actions/AuthedUser';
+import { withRouter } from 'react-router-dom';
 
 class Logout extends Component {
 
     handleLogout = (e) => {
         e.preventDefault();
-        const { setAuthenticatedUser } = this.props;
-        setAuthenticatedUser(null);
+        const { setAuthedUser } = this.props;
+        setAuthedUser(null);
+
+        this.props.history.push('/');
     }
 
     render() {
@@ -24,4 +27,4 @@ function mapStateToProps({ users }) {
 }
 
 
-export default connect(mapStateToProps, { setAuthenticatedUser })(Logout);
+export default withRouter(connect(mapStateToProps, { setAuthedUser })(Logout));

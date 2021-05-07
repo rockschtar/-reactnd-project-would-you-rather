@@ -18,15 +18,15 @@ class QuestionsTabs extends Component {
     render() {
 
         const { tab } = this.state;
-        const { authenticateUser, questions } = this.props;
+        const { authedUser, questions } = this.props;
 
         const questionArray = Object.keys(questions).map((key) => questions[key]);
         const answeredQuestions = questionArray.filter(
-          question => question.optionOne.votes.includes(authenticateUser) ||
-            question.optionTwo.votes.includes(authenticateUser));
+          question => question.optionOne.votes.includes(authedUser) ||
+            question.optionTwo.votes.includes(authedUser));
         const unansweredQuestions = questionArray.filter(
-          question => !question.optionOne.votes.includes(authenticateUser) &&
-            !question.optionTwo.votes.includes(authenticateUser));
+          question => !question.optionOne.votes.includes(authedUser) &&
+            !question.optionTwo.votes.includes(authedUser));
 
         return (
           <Fragment>
@@ -58,11 +58,11 @@ class QuestionsTabs extends Component {
 
 }
 
-function mapStateToProps({ questions, authenticateUser }) {
+function mapStateToProps({ questions, authedUser }) {
 
     return {
         questions : Object.keys(questions).map((key) => questions[key]).sort((a,b) => b.timestamp - a.timestamp),
-        authenticateUser,
+        authedUser,
     };
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setAuthenticatedUser } from '../Actions/AuthenticatedUser';
+import { setAuthedUser } from '../Actions/AuthedUser';
 import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
@@ -12,8 +12,8 @@ class Login extends Component {
 
     onSelectUser = (e) => {
         const userId = e.target.value;
-        const { setAuthenticatedUser } = this.props;
-        setAuthenticatedUser(userId);
+        const { setAuthedUser } = this.props;
+        setAuthedUser(userId);
 
         if (this.props.location.state) {
             this.props.history.push(this.props.location.state.from.pathname);
@@ -29,6 +29,9 @@ class Login extends Component {
 
           <div className="container grid-sm">
               <div className="card">
+                  <div className="card-header bg-gray text-center">
+                      <div className="card-title h5">Welcome to Would you rather?</div>
+                  </div>
                   <div className="card-image">
                       <img src={loginImage} alt="Login Teaser" className="img-responsive"/>
                   </div>
@@ -59,4 +62,4 @@ function mapStateToProps({ users }) {
     };
 }
 
-export default withRouter(connect(mapStateToProps, { setAuthenticatedUser })(Login));
+export default withRouter(connect(mapStateToProps, { setAuthedUser })(Login));
