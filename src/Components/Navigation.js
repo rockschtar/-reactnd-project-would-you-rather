@@ -1,45 +1,54 @@
-import React, {Component, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import Logout from './Logout';
-import { Link } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react'
+import { setAuthedUser } from '../Actions/AuthedUser'
+import MenuLink from './MenuLink'
 
 class Navigation extends Component {
+  state = {
+    activeItem: 'home',
+  }
 
-    render() {
+  handleLogout = (e) => {
+    e.preventDefault()
+    const { setAuthedUser } = this.props
+    setAuthedUser(null)
+    this.props.history.push('/')
+  }
 
-        const { user } = this.props;
+  render () {
+    const { user } = this.props
+    const { activeItem } = this.state
 
-        if(!user) {
-            return <Fragment />
-        }
-
-        return (
-          <header className="navbar">
-              <section className="navbar-section">
-                  <section className="navbar-section">
-                      {`Hi, ${user.name}`}
-                  </section>
-              </section>
-              <section className="navbar-center">
-                  <Link to={`/`}className='btn btn-link'>Home</Link>
-                  <Link to='/add' className='btn btn-link'>Add Question</Link>
-                  <Link to={`/leaderboard`}className='btn btn-link'>Leader Board</Link>
-              </section>
-              <section className="navbar-section">
-                  {<Logout />}
-              </section>
-          </header>
-
-        )
+    if (!user) {
+      return <></>
     }
 
+    return (
+      <Menu pointing secondary>
+
+        <MenuLink to="/">Home</MenuLink>
+        <MenuLink to="/add">Add Question</MenuLink>
+        <MenuLink to="/leaderboard">Leaderboard</MenuLink>
+
+        <Menu.Menu position="right">
+          <Menu.Item>
+            Hello, {user.name}
+          </Menu.Item>
+          <Menu.Item
+            name="logout"
+            active={activeItem === 'logout'}
+            onClick={this.handleLogout}
+          >Logout</Menu.Item>
+        </Menu.Menu>
+      </Menu>
+    )
+  }
 }
 
-function mapStateToProps({ authedUser, users }) {
-    return {
-        user : Object.values(users).find((user) => user.id === authedUser)
-    };
-}
-
-export default withRouter(connect(mapStateToProps)(Navigation));
+export default withRouter(connect(({ authedUser, users }) => {
+  return {
+    user: Object.values(users).find((user) => user.id === authedUser),
+  }
+}, { setAuthedUser })(Navigation))

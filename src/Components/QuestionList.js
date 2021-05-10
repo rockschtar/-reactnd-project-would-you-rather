@@ -1,27 +1,23 @@
-import { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import QuestionCardPreview from './QuestionCardPreview';
+import { Component } from 'react'
+import PropTypes from 'prop-types'
+import QuestionCardPreview from './QuestionCardPreview'
+import { Card } from 'semantic-ui-react'
 
 export default class QuestionList extends Component {
+  static propTypes = {
+    questions: PropTypes.array.isRequired,
+  }
 
-    static propTypes = {
-        questions: PropTypes.array.isRequired,
-    };
+  render () {
+    const { questions } = this.props
 
-    render() {
+    return (
 
-        const { questions } = this.props;
-
-        return (
-
-          <Fragment>
-              {questions.map((question) =>
-                <div className="mb-2" key={question.id}>
-                    <QuestionCardPreview question_id={question.id} question={question} />
-                </div>
-              )}
-          </Fragment>
-        )
-    }
-
+      <Card.Group>
+        {questions.map((question) =>
+          <QuestionCardPreview key={question.id} question={question}/>,
+        )}
+      </Card.Group>
+    )
+  }
 }

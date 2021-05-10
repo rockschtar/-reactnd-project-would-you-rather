@@ -1,114 +1,99 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { handleAddQuestion } from '../Actions/Questions';
-import { withRouter } from 'react-router-dom';
+import { Component } from 'react'
+import { Button, Card, Form } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { handleAddQuestion } from '../Actions/Questions'
 
 class AddQuestion extends Component {
+  state = {
+    optionOne: '',
+    optionTwo: '',
+    loading: false,
+  }
 
-    state = {
-        optionOne: '',
-        optionTwo: '',
-        loading: false,
-    };
+  onChangeAnswer = (e) => {
+    let newState = {}
 
-    isSubmitDisabled = () => {
-        const { optionOne, optionTwo, loading } = this.state;
-        return loading || optionOne.trim() === '' || optionTwo.trim() === '';
-    };
-
-    onChangeOption = (e) => {
-
-        let newState = {};
-
-        switch (e.target.name) {
-            case 'option-1':
-                newState = { optionOne: e.target.value };
-                break;
-            case 'option-2':
-                newState = { optionTwo: e.target.value };
-                break;
-            default:
-                return;
-        }
-
-        this.setState(newState);
-
-    };
-
-    onSubmit = (e) => {
-        e.preventDefault();
-
-        this.setState({ loading: true });
-
-        const { optionOne, optionTwo } = this.state;
-        const { handleAddQuestion, authedUser, history } = this.props;
-
-        handleAddQuestion(optionOne, optionTwo, authedUser)
-          .then(() => {
-              this.setState({ loading: false }, () => { history.push('/'); });
-          });
-    };
-
-    render() {
-
-        const { optionOne, optionTwo, loading } = this.state;
-
-        return (
-          <div className="card">
-              <div className="card-header bg-gray p-0">
-                  <div className="card-title h5 p-2">Add Question</div>
-              </div>
-
-              <form onSubmit={this.onSubmit}>
-                  <div className="card-body">
-                      <p className="text-gray">Complete the question:</p>
-                      <p>
-                          <strong>Would you rather...</strong>
-                      </p>
-
-                      <div className="form-group">
-                          <p>
-                              <input className="form-input"
-                                     name="option-1"
-                                     type="text"
-                                     disabled={loading}
-                                     value={optionOne}
-                                     placeholder="Enter Option One Here"
-                                     spellCheck="false"
-                                     onChange={this.onChangeOption}
-                                     data-ms-editor="true"/>
-                          </p>
-                          <p>
-                              <input className="form-input"
-                                     name="option-2"
-                                     type="text"
-                                     disabled={loading}
-                                     value={optionTwo}
-                                     placeholder="Enter Option Two Here"
-                                     spellCheck="false"
-                                     onChange={this.onChangeOption}
-                                     data-ms-editor="true"/>
-                          </p>
-                      </div>
-                  </div>
-                  <div className="card-footer text-center">
-                      <button
-                        type="submit"
-                        disabled={this.isSubmitDisabled()}
-                        className="btn btn-primary">Submit
-                      </button>
-                  </div>
-              </form>
-          </div>
-        );
+    switch (e.target.name) {
+      case 'option-1':
+        newState = { optionOne: e.target.value }
+        break
+      case 'option-2':
+        newState = { optionTwo: e.target.value }
+        break
+      default:
+        return
     }
+
+    this.setState(newState)
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+
+    this.setState({ loading: true })
+
+    const { optionOne, optionTwo } = this.state
+    const { handleAddQuestion, authedUser, history } = this.props
+
+    handleAddQuestion(optionOne, optionTwo, authedUser)
+      .then(() => {
+        this.setState({ loading: false, optionOne: '', optionTwo: '' }, () => {
+          history.push('/')
+        })
+      })
+  }
+
+  render () {
+    const { optionOne, optionTwo, loading } = this.state
+
+    const isSubmitDisabled = loading || optionOne.trim() === '' || optionTwo.trim() === ''
+
+    return (
+      <Form loading={loading} onSubmit={this.onSubmit}>
+        <Card fluid>
+          <Card.Content>
+            <Card.Header>Add Question</Card.Header>
+          </Card.Content>
+
+          <Card.Content>
+            <Form.Field>
+              <label>Option One</label>
+              <input
+                name="option-1"
+                onChange={this.onChangeAnswer}
+                value={optionOne}
+                disabled={loading}
+                placeholder="Enter Option One Here"/>
+            </Form.Field>
+            <Form.Field>
+              <label>Option Two</label>
+              <input
+                name="option-2"
+                onChange={this.onChangeAnswer}
+                value={optionTwo}
+                disabled={loading}
+                placeholder="Enter Option Two Here"/>
+            </Form.Field>
+          </Card.Content>
+
+          <Card.Content textAlign={'center'}>
+            <Button
+              primary
+              disabled={isSubmitDisabled}
+              type="submit">Submit</Button>
+          </Card.Content>
+
+        </Card>
+      </Form>
+    )
+  }
 }
 
 export default withRouter(connect(
   ({ authedUser }) => {
-      return {
-          authedUser: authedUser,
-      };
+    return {
+      authedUser: authedUser,
+    }
   },
-  { handleAddQuestion })(AddQuestion));
-
+  { handleAddQuestion })(AddQuestion))

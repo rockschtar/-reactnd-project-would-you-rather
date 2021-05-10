@@ -1,6 +1,5 @@
-@import "~spectre.css";
-
-
-.darth404 {
-    content: url('Assets/svg/Darth404.svg');
+.wyr-tab-content {
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none;
 }

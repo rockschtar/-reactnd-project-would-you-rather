@@ -1,10 +1,9 @@
-import { IS_LOADING } from '../Actions/Loading';
+import { IS_LOADING } from '../Actions/Loading'
 
-export default function isLoading(state = null, action) {
+export default function isLoading (state = null, action) {
+  if (action.type === IS_LOADING) {
+    return action.isLoading
+  }
 
-    if (action.type === IS_LOADING) {
-        return action.isLoading;
-    }
-
-    return state;
+  return state
 }

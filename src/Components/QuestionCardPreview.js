@@ -1,49 +1,46 @@
-import { Link } from 'react-router-dom';
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import QuestionCardHeader from './QuestionCardHeader';
-import { connect } from 'react-redux';
+import { Component } from 'react'
+import QuestionCard from './QuestionCard'
+import PropTypes from 'prop-types'
+import { Segment } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class QuestionCardPreview extends Component {
+  static propTypes = {
+    question: PropTypes.object.isRequired,
+  }
 
-    static propTypes = {
-        question: PropTypes.object.isRequired,
-    };
+  onButtonClick = (e) => {
+    e.preventDefault()
+    const { question } = this.props
+    this.props.history.push(`/questions/${question.id}`)
+  }
 
-    render() {
-        const { question, authedUser } = this.props;
+  render () {
+    const { question, authedUser } = this.props
 
-        const isAnswered = question.optionOne.votes.includes(authedUser) ||
-          question.optionTwo.votes.includes(authedUser);
+    const isAnswered = question.optionOne.votes.includes(authedUser) ||
+      question.optionTwo.votes.includes(authedUser)
 
+    const buttonText = isAnswered ? 'View Results' : 'Answer Question'
 
-        return (
-
-          <div className="card text-center">
-              <QuestionCardHeader question={question}/>
-
-              <div className="card-body">
-                  <div className="card-subtitle">{question.optionOne.text}</div>
-                  <div className="card-subtitle text-gray">...or...</div>
-              </div>
-
-              <div className="card-footer">
-                  <Link to={`/questions/${question.id}`} className="btn btn-primary">{isAnswered ? 'View Results' : 'Answer Question'}</Link>
-              </div>
-          </div>
-
-        );
-    }
-
+    return (
+      <QuestionCard
+        question={this.props.question}
+        buttonText={buttonText}
+        onButtonClick={this.onButtonClick}>
+        <Segment vertical><strong>Would you rather</strong></Segment>
+        <Segment vertical textAlign={'center'}>{question.optionOne.text}<br/>...or...</Segment>
+      </QuestionCard>
+    )
+  }
 }
 
-function mapStateToProps({ authedUser }) {
+export default withRouter(connect((
+  { authedUser },
+  ) => {
     return {
-        authedUser,
-    };
-}
-
-export default connect(mapStateToProps)(QuestionCardPreview);
-
-
-
+      authedUser,
+    }
+  },
+)(QuestionCardPreview))
