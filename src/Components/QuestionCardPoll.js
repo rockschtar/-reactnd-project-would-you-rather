@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { isAnswered } from '../Utils/Helpers'
 import { handleAnswerQuestion } from '../Actions/Questions'
-import { Divider, Form, Progress, Radio, Segment } from 'semantic-ui-react'
+import { Form, Progress, Radio, Segment } from 'semantic-ui-react'
 import QuestionCard from './QuestionCard'
 import { withRouter } from 'react-router-dom'
 import NotFound from './NotFound'
@@ -16,7 +16,7 @@ class QuestionCardPoll extends Component {
 
   static propTypes = {
     questionId: PropTypes.string,
-    question: PropTypes.object.isRequired,
+    question: PropTypes.object.isRequired
   }
 
   handleAnswerChange = (e, { value }) => {
@@ -89,15 +89,24 @@ class QuestionCardPoll extends Component {
     const result = (
 
       <>
-        <Progress percent={precentVotesOptionOne} progress success>
-          {question.optionOne.text} {userVotedForOptionOne &&
-        <span className="ui blue label">Your Vote!</span>}
-        </Progress>
-        <Divider/>
-        <Progress percent={precentVotesOptionTwo} progress success>
-          {question.optionTwo.text} {userVotedForOptionTwo &&
-        <span className="ui blue label">Your Vote!</span>}
-        </Progress>
+        <Segment vertical>
+          {countVotesOptionOne} out of {countVotesTotal} Votes
+          <Progress percent={precentVotesOptionOne} progress success>
+            {question.optionOne.text} {userVotedForOptionOne &&
+          <span className="ui blue label">Your Vote!</span>}
+          </Progress>
+        </Segment>
+
+
+        <Segment vertical>
+          {countVotesOptionTwo} out of {countVotesTotal} Votes
+          <Progress percent={precentVotesOptionTwo} progress success>
+            {question.optionTwo.text} {userVotedForOptionTwo &&
+          <span className="ui blue label">Your Vote!</span>}
+          </Progress>
+        </Segment>
+
+
       </>
 
     )
