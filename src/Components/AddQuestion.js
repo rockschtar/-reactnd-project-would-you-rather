@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Button, Card, Form } from 'semantic-ui-react'
+import { Button, Card, Divider, Form } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../Actions/Questions'
@@ -57,8 +57,11 @@ class AddQuestion extends Component {
           </Card.Content>
 
           <Card.Content>
+
             <Form.Field>
-              <label>Option One</label>
+              <label>Would you rather</label>
+            </Form.Field>
+            <Form.Field>
               <input
                 name="option-1"
                 onChange={this.onChangeAnswer}
@@ -66,8 +69,8 @@ class AddQuestion extends Component {
                 disabled={loading}
                 placeholder="Enter Option One Here"/>
             </Form.Field>
+            <Divider horizontal>OR</Divider>
             <Form.Field>
-              <label>Option Two</label>
               <input
                 name="option-2"
                 onChange={this.onChangeAnswer}
