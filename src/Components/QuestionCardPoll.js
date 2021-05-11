@@ -57,7 +57,7 @@ class QuestionCardPoll extends Component {
     const precentVotesOptionTwo = round((countVotesOptionTwo * 100) / countVotesTotal)
     const userVotedForOptionOne = question.optionOne.votes.includes(authedUser)
     const userVotedForOptionTwo = question.optionTwo.votes.includes(authedUser)
-    const isButtonDisabled = loading || answer === null
+    const isButtonDisabled = loading || (!isAnswered(question, authedUser) && answer === null)
 
     const form = (
       <Form loading={loading}>
