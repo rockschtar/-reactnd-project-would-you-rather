@@ -3,10 +3,6 @@ export function isAnswered (question, user) {
     question.optionTwo.votes.includes(user)
 }
 
-export function getLeaderBoard () {
-
-}
-
 export function getUserScore (user) {
   const answers = Object.values(user.answers)
 
