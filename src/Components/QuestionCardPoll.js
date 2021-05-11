@@ -5,6 +5,8 @@ import { isAnswered } from '../Utils/Helpers'
 import { handleAnswerQuestion } from '../Actions/Questions'
 import { Form, Progress, Radio, Segment } from 'semantic-ui-react'
 import QuestionCard from './QuestionCard'
+import { withRouter } from 'react-router-dom'
+import NotFound from './NotFound'
 
 class QuestionCardPoll extends Component {
   state = {
@@ -27,6 +29,8 @@ class QuestionCardPoll extends Component {
     const { question, authedUser, handleAnswerQuestion } = this.props
     const { answer } = this.state
 
+    console.log("QUESTION", question);
+
     handleAnswerQuestion(authedUser, question.id, answer).then(() => {
       this.setState({ loading: false })
     })
@@ -40,6 +44,10 @@ class QuestionCardPoll extends Component {
     const { loading, answer } = this.state
     const { question, authedUser } = this.props
 
+    if(!question) {
+      return <NotFound />
+    }
+
     const round = (number) => {
       return Math.round(number * 100) / 100
     }
@@ -47,10 +55,8 @@ class QuestionCardPoll extends Component {
     const countVotesOptionOne = question.optionOne.votes.length
     const countVotesOptionTwo = question.optionTwo.votes.length
     const countVotesTotal = countVotesOptionOne + countVotesOptionTwo
-    const precentVotesOptionOne = round(
-      (countVotesOptionOne * 100) / countVotesTotal)
-    const precentVotesOptionTwo = round(
-      (countVotesOptionTwo * 100) / countVotesTotal)
+    const precentVotesOptionOne = round((countVotesOptionOne * 100) / countVotesTotal)
+    const precentVotesOptionTwo = round((countVotesOptionTwo * 100) / countVotesTotal)
     const userVotedForOptionOne = question.optionOne.votes.includes(authedUser)
     const userVotedForOptionTwo = question.optionTwo.votes.includes(authedUser)
     const isButtonDisabled = loading || answer === null
@@ -114,7 +120,7 @@ class QuestionCardPoll extends Component {
   }
 }
 
-export default connect((
+export default withRouter(connect((
   { users, questions, authedUser }
   , props) => {
     const questionId = props.match?.params?.question_id ?? props.questionId
@@ -127,4 +133,4 @@ export default connect((
   }
   ,
   { handleAnswerQuestion },
-)(QuestionCardPoll)
+)(QuestionCardPoll))
