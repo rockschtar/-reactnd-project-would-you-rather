@@ -59,7 +59,7 @@ class AddQuestion extends Component {
           <Card.Content>
 
             <Form.Field>
-              <label>Would you rather</label>
+              <label>Would You Rather</label>
             </Form.Field>
             <Form.Field>
               <input
