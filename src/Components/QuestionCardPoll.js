@@ -85,12 +85,10 @@ class QuestionCardPoll extends Component {
     const result = (
 
       <>
-        {question.optionOne.text} {userVotedForOptionOne &&
-      <strong>Your Vote!</strong>}
+        {question.optionOne.text} {userVotedForOptionOne && <strong>Your Vote!</strong>}
         <Progress percent={precentVotesOptionOne} progress success/>
 
-        {question.optionTwo.text} {userVotedForOptionTwo &&
-      <strong>Your Vote!</strong>}
+        {question.optionTwo.text} {userVotedForOptionTwo && <strong>Your Vote!</strong>}
         <Progress percent={precentVotesOptionTwo} progress success/>
       </>
 
