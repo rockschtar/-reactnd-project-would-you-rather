@@ -33,9 +33,9 @@ class Navigation extends Component {
         <MenuLink to="/leaderboard">Leaderboard</MenuLink>
 
         <Menu.Menu position="right">
-          <Menu.Item>
-            Hello, {user.name}
-          </Menu.Item>
+
+          <MenuLink to="/profile">{user.name}</MenuLink>
+
           <Menu.Item
             name="logout"
             active={activeItem === 'logout'}

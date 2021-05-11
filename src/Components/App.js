@@ -10,6 +10,7 @@ import AddQuestion from './AddQuestion'
 import QuestionCardPoll from './QuestionCardPoll'
 import NotFound from './NotFound'
 import LeaderBoard from './LeaderBoard'
+import Profile from './Profile'
 import { Container } from 'semantic-ui-react'
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
                 <Route exact path="/" component={Home}/>
                 <ProtectedRoute exact path="/add" component={AddQuestion}/>
                 <ProtectedRoute exact path="/leaderboard" component={LeaderBoard}/>
+                <ProtectedRoute exact path="/profile" component={Profile}/>
                 <ProtectedRoute path="/questions/:question_id" component={QuestionCardPoll}/>
                 <Route component={NotFound}/>
               </Switch>

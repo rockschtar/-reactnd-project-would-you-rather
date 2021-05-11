@@ -3,3 +3,7 @@
     border: none !important;
     box-shadow: none;
 }
+
+.lightgray {
+    background: lightgray !important;
+}

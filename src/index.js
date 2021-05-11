@@ -9,8 +9,8 @@ import indexReducer from './Reducers/index'
 import indexMiddleware from './Middleware/index'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
-
 const store = createStore(indexReducer, indexMiddleware)
+
 
 ReactDOM.render(
   <Provider store={store}>
