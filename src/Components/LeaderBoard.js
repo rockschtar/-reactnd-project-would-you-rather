@@ -6,21 +6,16 @@ import ScoreCard from './ScoreCard'
 class LeaderBoard extends Component {
   render () {
 
-    const { leaderBoard } = this.props;
+    const { leaderBoard } = this.props
 
-    console.log(leaderBoard);
-
-    return (<>
-
-      {leaderBoard.map((userScore, index) => (
-        <ScoreCard key={index} userScore={userScore}/>
-      ))
-      }
-
-    </>)
+    return (
+      <>
+        {leaderBoard.map((userScore, index) => (
+          <ScoreCard key={index} userScore={userScore}/>
+        ))}
+      </>)
   }
 }
-
 
 export default connect(({ users }) => {
 
@@ -28,6 +23,6 @@ export default connect(({ users }) => {
     .map(user => { return getUserScore(user)})
     .sort((a, b) => b.score - a.score)
   return {
-    leaderBoard
-  };
-})(LeaderBoard);
+    leaderBoard,
+  }
+})(LeaderBoard)
