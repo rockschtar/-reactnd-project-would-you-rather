@@ -15,8 +15,7 @@ class QuestionCardPoll extends Component {
   }
 
   static propTypes = {
-    questionId: PropTypes.string,
-    question: PropTypes.object.isRequired
+    questionId: PropTypes.string
   }
 
   handleAnswerChange = (e, { value }) => {
@@ -97,7 +96,6 @@ class QuestionCardPoll extends Component {
           </Progress>
         </Segment>
 
-
         <Segment vertical>
           {countVotesOptionTwo} out of {countVotesTotal} Votes
           <Progress percent={precentVotesOptionTwo} progress success>
@@ -105,10 +103,7 @@ class QuestionCardPoll extends Component {
           <span className="ui blue label">Your Vote!</span>}
           </Progress>
         </Segment>
-
-
       </>
-
     )
 
     let content = form
