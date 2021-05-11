@@ -3,7 +3,7 @@
 # Udacity Would You Rather? Project
 
 Completed _Would You Rather?_ Project for the Udacity Nanodegree Programm.
-This is a polling (question & answer) game application.
+This is a polling (question & answer) game app.
 
 ## Requirements
 
