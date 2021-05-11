@@ -28,7 +28,7 @@ class QuestionCard extends Component {
               <Grid.Column width={4} textAlign={'center'} verticalAlign={'middle'}>
                 <Image src={user.avatarURL} circular/>
               </Grid.Column>
-              <Grid.Column width={12}>
+              <Grid.Column width={12} verticalAlign={'middle'}>
                 {children}
               </Grid.Column>
             </Grid.Row>

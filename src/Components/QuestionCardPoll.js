@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { isAnswered } from '../Utils/Helpers'
 import { handleAnswerQuestion } from '../Actions/Questions'
-import { Form, Progress, Radio, Segment } from 'semantic-ui-react'
+import { Divider, Form, Progress, Radio, Segment } from 'semantic-ui-react'
 import QuestionCard from './QuestionCard'
 import { withRouter } from 'react-router-dom'
 import NotFound from './NotFound'
@@ -29,8 +29,6 @@ class QuestionCardPoll extends Component {
     const { question, authedUser, handleAnswerQuestion } = this.props
     const { answer } = this.state
 
-    console.log("QUESTION", question);
-
     handleAnswerQuestion(authedUser, question.id, answer).then(() => {
       this.setState({ loading: false })
     })
@@ -44,8 +42,8 @@ class QuestionCardPoll extends Component {
     const { loading, answer } = this.state
     const { question, authedUser } = this.props
 
-    if(!question) {
-      return <NotFound />
+    if (!question) {
+      return <NotFound/>
     }
 
     const round = (number) => {
@@ -91,11 +89,15 @@ class QuestionCardPoll extends Component {
     const result = (
 
       <>
-        {question.optionOne.text} {userVotedForOptionOne && <strong>Your Vote!</strong>}
-        <Progress percent={precentVotesOptionOne} progress success/>
-
-        {question.optionTwo.text} {userVotedForOptionTwo && <strong>Your Vote!</strong>}
-        <Progress percent={precentVotesOptionTwo} progress success/>
+        <Progress percent={precentVotesOptionOne} progress success>
+          {question.optionOne.text} {userVotedForOptionOne &&
+        <span className="ui blue label">Your Vote!</span>}
+        </Progress>
+        <Divider/>
+        <Progress percent={precentVotesOptionTwo} progress success>
+          {question.optionTwo.text} {userVotedForOptionTwo &&
+        <span className="ui blue label">Your Vote!</span>}
+        </Progress>
       </>
 
     )
