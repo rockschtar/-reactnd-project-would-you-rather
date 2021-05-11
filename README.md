@@ -1,4 +1,9 @@
+[![Edit would-you-rather](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/rockschtar/reactnd-project-would-you-rather/tree/main/?fontsize=14&hidenavigation=1&theme=dark&view=preview)
+
 # Udacity Would You Rather? Project
+
+Completed _Would You Rather?_ Project for the Udacity Nanodegree Programm.
+This is a polling (question & answer) game application.
 
 ## Requirements
 
